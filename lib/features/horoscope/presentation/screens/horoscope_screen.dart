@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/horoscope_provider.dart';
 import '../../../../config/constants/app_constants.dart';
 import '../../../../core/widgets/loading_widget.dart';
+import '../../../../services/ads/ad_service.dart';
 
 class HoroscopeScreen extends StatelessWidget {
   const HoroscopeScreen({super.key});
@@ -138,14 +139,47 @@ class HoroscopeScreen extends StatelessWidget {
   }
 }
 
-class _HoroscopeContent extends StatelessWidget {
+class _HoroscopeContent extends StatefulWidget {
   final HoroscopeProvider provider;
 
   const _HoroscopeContent({required this.provider});
 
   @override
+  State<_HoroscopeContent> createState() => _HoroscopeContentState();
+}
+
+class _HoroscopeContentState extends State<_HoroscopeContent> {
+  bool _yearlyUnlocked = false;
+
+  void _watchAdForYearlyPrediction() async {
+    if (!AdService().isGracePeriodOver) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Yearly prediction will unlock after exploring the app a bit 🙏'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+    if (!AdService().isRewardedAdReady) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ad is loading, please try again in a moment...'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+    await AdService().showRewardedAd(
+      onRewarded: (_) {
+        if (mounted) setState(() => _yearlyUnlocked = true);
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final horoscope = provider.currentHoroscope!;
+    final horoscope = widget.provider.currentHoroscope!;
     final signIndex = AppConstants.zodiacSigns.indexOf(horoscope.zodiacSign);
     final gradient = AppConstants.zodiacGradients[signIndex >= 0 ? signIndex : 0];
 
@@ -297,6 +331,46 @@ class _HoroscopeContent extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 16),
+          // Yearly prediction — unlocked via rewarded ad
+          if (_yearlyUnlocked)
+            _DetailCard(
+              icon: '🗓️',
+              title: 'Yearly Prediction',
+              content:
+                  'This year brings transformative energy for ${horoscope.zodiacSign}. '
+                  'The first half favours career growth and financial gains. '
+                  'Relationships deepen around mid-year. '
+                  'Health remains stable; prioritise rest in the latter months. '
+                  'Overall, a year of expansion and new beginnings awaits you. 🌟',
+            )
+          else
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                child: Column(
+                  children: [
+                    const Text('🗓️ Yearly Prediction', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Watch a short ad to unlock your full yearly horoscope for ${horoscope.zodiacSign}.',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton.icon(
+                      onPressed: _watchAdForYearlyPrediction,
+                      icon: const Icon(Icons.play_circle_outline),
+                      label: const Text('Watch Ad — Unlock Yearly Prediction'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppConstants.primarySaffron,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           const SizedBox(height: 16),
         ],
       ),

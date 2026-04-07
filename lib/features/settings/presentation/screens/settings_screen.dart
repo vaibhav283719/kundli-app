@@ -170,7 +170,7 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  'Kundli App v1.0.0',
+                  'Instant Kundli Maker v1.0.0',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: Colors.grey,
                   ),
@@ -187,7 +187,7 @@ class SettingsScreen extends StatelessWidget {
   void _showAboutDialog(BuildContext context) {
     showAboutDialog(
       context: context,
-      applicationName: 'Kundli App',
+      applicationName: 'Instant Kundli Maker',
       applicationVersion: '1.0.0',
       applicationIcon: Container(
         width: 48,

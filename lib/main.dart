@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'services/ads/ad_service.dart';
 import 'config/theme/app_theme.dart';
 import 'config/routes/app_router.dart';
 import 'features/auth/presentation/providers/auth_provider.dart';
@@ -30,6 +31,8 @@ void main() async {
   } catch (e) {
     debugPrint('Firebase initialization failed (demo mode): $e');
   }
+
+  await AdService().initialize();
 
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -59,7 +62,7 @@ class KundliApp extends StatelessWidget {
       child: Consumer<SettingsProvider>(
         builder: (context, settings, _) {
           return MaterialApp.router(
-            title: 'Kundli App',
+            title: 'Instant Kundli Maker',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,

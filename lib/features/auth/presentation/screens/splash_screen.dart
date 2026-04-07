@@ -149,7 +149,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 ],
                               ).createShader(bounds),
                               child: const Text(
-                                'Kundli App',
+                                'Instant Kundli Maker',
                                 style: TextStyle(
                                   fontSize: 36,
                                   fontWeight: FontWeight.bold,

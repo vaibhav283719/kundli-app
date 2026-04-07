@@ -5,6 +5,7 @@ import '../widgets/feature_card.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../horoscope/presentation/providers/horoscope_provider.dart';
 import '../../../../config/constants/app_constants.dart';
+import '../../../../core/widgets/banner_ad_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,26 +30,32 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _currentIndex == 0
           ? _HomeTab(onNavigate: _navigate)
           : _KundliTab(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          if (index == 0) {
-            setState(() => _currentIndex = 0);
-          } else if (index == 1) {
-            setState(() => _currentIndex = 1);
-          } else if (index == 2) {
-            context.push('/horoscope');
-          } else if (index == 3) {
-            context.push('/profile');
-          }
-        },
-        items: _navItems
-            .map((item) => BottomNavigationBarItem(
-                  icon: Icon(item.icon),
-                  activeIcon: Icon(item.activeIcon),
-                  label: item.label,
-                ))
-            .toList(),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const BannerAdWidget(),
+          BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              if (index == 0) {
+                setState(() => _currentIndex = 0);
+              } else if (index == 1) {
+                setState(() => _currentIndex = 1);
+              } else if (index == 2) {
+                context.push('/horoscope');
+              } else if (index == 3) {
+                context.push('/profile');
+              }
+            },
+            items: _navItems
+                .map((item) => BottomNavigationBarItem(
+                      icon: Icon(item.icon),
+                      activeIcon: Icon(item.activeIcon),
+                      label: item.label,
+                    ))
+                .toList(),
+          ),
+        ],
       ),
     );
   }
@@ -168,7 +175,7 @@ class _HomeTab extends StatelessWidget {
             ),
           ),
           actions: const [],
-          title: const Text('Kundli App', style: TextStyle(color: Colors.white)),
+          title: const Text('Instant Kundli Maker', style: TextStyle(color: Colors.white)),
         ),
         SliverToBoxAdapter(
           child: Padding(

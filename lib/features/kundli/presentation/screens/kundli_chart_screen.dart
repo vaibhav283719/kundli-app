@@ -8,6 +8,7 @@ import '../../domain/entities/kundli_entity.dart';
 import '../../../../config/constants/app_constants.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/loading_widget.dart';
+import '../../../../services/ads/ad_service.dart';
 
 class KundliChartScreen extends StatefulWidget {
   const KundliChartScreen({super.key});
@@ -53,51 +54,57 @@ class _KundliChartScreenState extends State<KundliChartScreen>
           );
         }
 
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(kundli.birthDetails.name),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.save_outlined),
-                onPressed: () async {
-                  await kundliProvider.saveCurrentKundli();
-                  if (context.mounted) {
+        return PopScope(
+          canPop: true,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) AdService().showInterstitialAd();
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(kundli.birthDetails.name),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.save_outlined),
+                  onPressed: () async {
+                    await kundliProvider.saveCurrentKundli();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Kundli saved successfully'),
+                          backgroundColor: Color(0xFF00C853),
+                        ),
+                      );
+                    }
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.share_outlined),
+                  onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Kundli saved successfully'),
-                        backgroundColor: Color(0xFF00C853),
-                      ),
+                      const SnackBar(content: Text('Share feature coming soon')),
                     );
-                  }
-                },
+                  },
+                ),
+              ],
+              bottom: TabBar(
+                controller: _tabController,
+                tabs: const [
+                  Tab(text: 'Chart'),
+                  Tab(text: 'Planets'),
+                  Tab(text: 'Dasha'),
+                  Tab(text: 'Yogas'),
+                ],
               ),
-              IconButton(
-                icon: const Icon(Icons.share_outlined),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Share feature coming soon')),
-                  );
-                },
-              ),
-            ],
-            bottom: TabBar(
+            ),
+            body: TabBarView(
               controller: _tabController,
-              tabs: const [
-                Tab(text: 'Chart'),
-                Tab(text: 'Planets'),
-                Tab(text: 'Dasha'),
-                Tab(text: 'Yogas'),
+              children: [
+                _ChartTab(kundli: kundli),
+                _PlanetsTab(kundli: kundli),
+                _DashaTab(kundli: kundli),
+                _YogasTab(kundli: kundli),
               ],
             ),
-          ),
-          body: TabBarView(
-            controller: _tabController,
-            children: [
-              _ChartTab(kundli: kundli),
-              _PlanetsTab(kundli: kundli),
-              _DashaTab(kundli: kundli),
-              _YogasTab(kundli: kundli),
-            ],
           ),
         );
       },
