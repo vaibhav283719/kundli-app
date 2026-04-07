@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <theme name="Theme.KundliApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_saffron</item>
+        <item name="colorPrimaryVariant">@color/deep_purple</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <item name="colorSecondary">@color/primary_gold</item>
+        <item name="colorOnSecondary">@color/dark_background</item>
+        <item name="colorSurface">@color/card_dark</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorError">@color/accent_red</item>
+        <item name="android:statusBarColor">@color/dark_background</item>
+        <item name="android:navigationBarColor">@color/dark_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </theme>
+
+    <theme name="Theme.KundliApp.Light" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_saffron</item>
+        <item name="colorPrimaryVariant">@color/deep_purple</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <item name="colorSecondary">@color/primary_gold</item>
+        <item name="colorOnSecondary">@color/dark_background</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#1A0533</item>
+        <item name="android:colorBackground">#F5F0FF</item>
+        <item name="colorError">@color/accent_red</item>
+    </theme>
+</resources>
