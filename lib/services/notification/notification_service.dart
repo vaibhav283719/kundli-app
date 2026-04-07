@@ -112,9 +112,3 @@ class NotificationService {
     );
   }
 }
-
-// Keep Color import local
-class Color {
-  final int value;
-  const Color(this.value);
-}

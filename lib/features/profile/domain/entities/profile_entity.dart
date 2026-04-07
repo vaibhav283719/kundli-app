@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../kundli/domain/entities/birth_details_entity.dart';
+import '../../../kundli/domain/entities/birth_details_entity.dart';
 
 class ProfileEntity extends Equatable {
   final String id;
