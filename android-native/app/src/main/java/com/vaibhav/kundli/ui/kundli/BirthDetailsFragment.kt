@@ -18,12 +18,14 @@ import com.vaibhav.kundli.R
 import com.vaibhav.kundli.databinding.FragmentBirthDetailsBinding
 import com.vaibhav.kundli.domain.model.BirthDetails
 import com.vaibhav.kundli.domain.model.UiState
+import com.vaibhav.kundli.util.AdManager
 import com.vaibhav.kundli.util.Constants
 import com.vaibhav.kundli.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class BirthDetailsFragment : Fragment() {
@@ -31,6 +33,8 @@ class BirthDetailsFragment : Fragment() {
     private var _binding: FragmentBirthDetailsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: KundliViewModel by viewModels()
+
+    @Inject lateinit var adManager: AdManager
 
     private var selectedDate: Calendar = Calendar.getInstance()
     private var selectedHour: Int = 6
@@ -53,6 +57,7 @@ class BirthDetailsFragment : Fragment() {
         setupDateTimePickers()
         setupCalculateButton()
         observeState()
+        adManager.loadInterstitial()
     }
 
     private fun setupCityDropdown() {
@@ -160,8 +165,11 @@ class BirthDetailsFragment : Fragment() {
                         is UiState.Success -> {
                             binding.progressBar.isVisible = false
                             binding.btnCalculate.isEnabled = true
-                            val bundle = Bundle().apply { putString("kundliId", state.data.id) }
-                            findNavController().navigate(R.id.action_birthDetailsFragment_to_kundliChartFragment, bundle)
+                            val kundliId = state.data.id
+                            adManager.showInterstitial(requireActivity()) {
+                                val bundle = Bundle().apply { putString("kundliId", kundliId) }
+                                findNavController().navigate(R.id.action_birthDetailsFragment_to_kundliChartFragment, bundle)
+                            }
                             viewModel.resetState()
                         }
                         is UiState.Error -> {

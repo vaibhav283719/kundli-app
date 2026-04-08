@@ -211,5 +211,18 @@
             android:layout_marginTop="@dimen/spacing_md"
             android:layout_marginBottom="32dp" />
 
+        <!-- Watch Ad for free trial -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnWatchAd"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:layout_marginBottom="@dimen/spacing_lg"
+            android:text="📺  Watch Ad for 1 Day Free Access"
+            app:backgroundTint="@color/card_dark"
+            app:cornerRadius="28dp"
+            app:strokeColor="@color/primary_saffron"
+            app:strokeWidth="1dp" />
+
     </LinearLayout>
 </ScrollView>

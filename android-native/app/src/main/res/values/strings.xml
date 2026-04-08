@@ -88,6 +88,11 @@
     <string name="premium_features">Premium Features</string>
     <string name="save_36">Save 36%</string>
 
+    <!-- AdMob Ad Unit IDs -->
+    <string name="admob_banner_unit_id">ca-app-pub-3821574975461985/7983613630</string>
+    <string name="admob_interstitial_unit_id">ca-app-pub-3821574975461985/3786617244</string>
+    <string name="admob_rewarded_unit_id">ca-app-pub-3821574975461985/2441949249</string>
+
     <!-- Profile -->
     <string name="edit_profile">Edit Profile</string>
     <string name="save_profile">Save Profile</string>
