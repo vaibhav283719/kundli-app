@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import com.vaibhav.kundli.databinding.FragmentKundliChartBinding
 import com.vaibhav.kundli.domain.model.KundliChart
@@ -27,7 +26,6 @@ class KundliChartFragment : Fragment() {
     private var _binding: FragmentKundliChartBinding? = null
     private val binding get() = _binding!!
     private val viewModel: KundliViewModel by viewModels()
-    private val args: KundliChartFragmentArgs by navArgs()
 
     private val planetAdapter = KundliChartAdapter()
     private val dashaAdapter = DashaAdapter()
@@ -43,7 +41,7 @@ class KundliChartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val kundliId = args.kundliId
+        val kundliId = arguments?.getString("kundliId").orEmpty()
         if (kundliId.isNotEmpty()) {
             viewModel.loadKundliById(kundliId)
         }

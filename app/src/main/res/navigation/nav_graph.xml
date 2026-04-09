@@ -90,12 +90,7 @@
     <fragment
         android:id="@+id/kundliChartFragment"
         android:name="com.vaibhav.kundli.ui.kundli.KundliChartFragment"
-        android:label="Kundli Chart">
-        <argument
-            android:name="kundliId"
-            app:argType="string"
-            android:defaultValue="" />
-    </fragment>
+        android:label="Kundli Chart" />
 
     <fragment
         android:id="@+id/horoscopeFragment"

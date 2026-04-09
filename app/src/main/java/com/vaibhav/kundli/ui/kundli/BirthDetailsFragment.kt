@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.vaibhav.kundli.R
 import com.vaibhav.kundli.databinding.FragmentBirthDetailsBinding
 import com.vaibhav.kundli.domain.model.BirthDetails
 import com.vaibhav.kundli.domain.model.UiState
@@ -166,9 +167,10 @@ class BirthDetailsFragment : Fragment() {
                             binding.btnCalculate.isEnabled = true
                             val kundliId = state.data.id
                             adManager.showInterstitial(requireActivity()) {
-                                val action = BirthDetailsFragmentDirections
-                                    .actionBirthDetailsFragmentToKundliChartFragment(kundliId = kundliId)
-                                findNavController().navigate(action)
+                                val bundle = Bundle().apply { putString("kundliId", kundliId) }
+                                findNavController().navigate(
+                                    R.id.action_birthDetailsFragment_to_kundliChartFragment, bundle
+                                )
                             }
                             viewModel.resetState()
                         }
