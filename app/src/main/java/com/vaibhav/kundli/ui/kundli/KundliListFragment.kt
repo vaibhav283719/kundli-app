@@ -27,8 +27,9 @@ class KundliListFragment : Fragment() {
     private val adapter by lazy {
         KundliListAdapter(
             onItemClick = { chart ->
-                val bundle = Bundle().apply { putString("kundliId", chart.id) }
-                findNavController().navigate(R.id.action_kundliListFragment_to_kundliChartFragment, bundle)
+                val action = KundliListFragmentDirections
+                    .actionKundliListFragmentToKundliChartFragment(kundliId = chart.id)
+                findNavController().navigate(action)
             },
             onDeleteClick = { chart ->
                 viewModel.deleteKundli(chart.id)
