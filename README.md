@@ -1,5 +1,37 @@
 # Kundli App
 
+A native Android (Kotlin) Kundli / Astrology app.
+
+## Features
+
+- Firebase Authentication (Login, Register, Forgot Password)
+- Kundli generation with birth details
+- Kundli chart view with planet positions, Dasha timeline, and Yoga analysis
+- Daily/Weekly/Monthly horoscope
+- Gun Milan / Compatibility checker
+- Remedies section
+- User profile management
+- Premium subscription screen
+- AdMob integration (Banner, Interstitial, Rewarded)
+- Push notifications via Firebase Cloud Messaging
+- Offline caching with Room database
+
+## Tech Stack
+
+- Kotlin
+- Android Jetpack (Navigation, ViewModel, LiveData, Room)
+- Hilt (Dependency Injection)
+- Firebase (Auth, Firestore, FCM)
+- Google AdMob
+- Material Design 3
+
+## Setup
+
+1. Open the project in Android Studio.
+2. Add your `google-services.json` to `app/`.
+3. Build and run on a device or emulator (API 26+).
+
+
 This is the initial repository structure for the Kundli App.
 
 ## Project Overview
